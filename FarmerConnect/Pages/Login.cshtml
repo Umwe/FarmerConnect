@@ -1,0 +1,92 @@
+﻿@page
+@model FarmerConnect.Pages.LoginModel
+@{
+}
+<link rel="stylesheet" href="~/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+
+<div class="container">
+
+    @if (Model.message.Length > 1)
+    {
+        <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <center> <p><strong>Hello!</strong> @Model.message</p></center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Show the modal using JavaScript when needed -->
+        <script>
+            $(document).ready(function () {
+                $('#messageModal').modal('show');
+            });
+        </script>
+    }
+    <style>
+        .icon {
+            color: white;
+            margin-top: 4px;
+            margin-left: 6px;
+        }
+
+        form label {
+            color: #fff;
+        }
+
+        form h2 {
+            color: #fff;
+        }
+
+        form {
+            margin-left: 27%;
+            margin-top: 80px;
+        }
+
+        .btnlg {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            margin-left: 20px;
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #fff;
+        }
+
+        .modal-header {
+            background-color: #134611;
+        }
+    </style>
+    <div class="btnlg">
+        <button type="button" onclick="location.href='@Url.Page("/Index")'" class="btn btn-outline-success">Home</button>
+    </div>
+    <form method="post">
+        <h2>Login<ion-icon name="log-in-outline"></ion-icon></h2>
+        <div class="form-group email">
+            <label for="email">Email Address<ion-icon class="icon" name="mail-outline"></ion-icon></label>
+            <input type="text" id="email" placeholder="Enter your email address" name="email">
+        </div>
+        <div class="form-group password">
+            <label for="password">Password<ion-icon class="icon" name="finger-print-outline"></ion-icon></label>
+            <input type="password" id="password" placeholder="Enter your password" name="password">
+            <i id="pass-toggle-btn" class="fa-solid fa-eye"></i>
+        </div>
+        <div>
+            <a href="/Signup" class="info" style="color: #38b000;">I don't have an account</a>
+        </div>
+        <div class="form-group submit-btn">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>

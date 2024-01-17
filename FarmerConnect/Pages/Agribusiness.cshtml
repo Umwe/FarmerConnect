@@ -1,0 +1,192 @@
+﻿@page
+@model FarmerConnect.Pages.AgribusinessModel
+@{
+}
+@if (Model.message.Length > 1)
+{
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <center> <p><strong>Hello!</strong> @Model.message</p></center>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100vh;
+        max-width: 100vh;
+        margin: 0;
+        background-color: #2b9348;
+        overflow: hidden;
+    }
+
+    h1 {
+        color: white;
+        font-family: "Space Mono", monospace;
+        font-size: 12vw;
+    }
+
+    .content1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        text-align: center;
+    }
+
+    .top-links {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        margin-right: 20px;
+        display: flex;
+        font-size: 30px;
+    }
+
+    .divider {
+        color: white;
+        margin: 0 10px;
+    }
+
+    .intro {
+        font-family: "Source Code Pro", monospace;
+        font-size: 4vw;
+    }
+
+    .white-text {
+        color: white;
+    }
+
+    .green-text {
+        color: black;
+    }
+
+    a {
+        color: white;
+        font-family: "Source Code Pro", monospace;
+    }
+    .icon{
+        color: white;
+        margin-top: 7px;
+        margin-right: 500px;
+    }
+
+    .logo {
+        width: 248px;
+        height: 190px;
+        margin-right: 10px;
+    }
+
+    .btnlg {
+        position: absolute;
+        top: 30px;
+        left: 10px;
+        margin-left: 20px;
+        display: flex;
+    }
+
+    .modal-content {
+        background-color: #fff;
+    }
+
+    .modal-header {
+        background-color: #134611;
+    }
+</style>
+<div class="content1">
+    <div class="btnlg">
+        <button type="button" onclick="location.href='@Url.Page("/Index")'" class="btn btn-outline-light">LogOut</button>
+    </div>
+    <div class="top-links">
+        <ion-icon class="icon" name="home-outline"></ion-icon>
+        <a asp-area="" asp-page="/Services">Services</a>
+        <span class="divider">/</span>
+        <a asp-area="" asp-page="/Resources">Resources</a>
+        <span class="divider">/</span>
+        <a asp-area="" asp-page="/KnowledgeSharingAgri">KnowledgeSharing</a>
+        <span class="divider">/</span>
+        <a asp-area="" asp-page="/Report">Report</a>
+        <span class="divider">/</span>
+        <a asp-area="" asp-page="/transactionhistory">History</a>
+    </div>
+    <div class="text-center">
+        <img src="~/image/farmer.png" class="logo">
+    </div>
+    <h1 data-value="WELCOME">WELCOME</h1>
+    <p class="intro"><span class="white-text">AgriBusiness</span> <span class="green-text">@HttpContext.Session.GetInt32("UserId")</span></p>
+
+    <h3>Knowledgesharing</h3>
+    <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal" data-whatever="">Open </button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Knowledgesharing Post </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        @foreach (var knowledge in Model.knowledgesharingList)
+                        {
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="@("heading" + knowledge.Id)">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="@("#collapse" + knowledge.Id)" aria-expanded="false" aria-controls="@("collapse" + knowledge.Id)">
+                                        @knowledge.title
+                                    </button>
+                                </h2>
+                                <div id="@("collapse" + knowledge.Id)" class="accordion-collapse collapse" aria-labelledby="@("heading" + knowledge.Id)" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">@knowledge.content</div>
+                                    <div><code>@knowledge.timestamp</code></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    document.querySelector("h1").onmouseover = event => {
+        let i = 0;
+
+        const interval = setInterval(() => {
+            event.target.innerText = event.target.innerText.split("")
+                .map((letter, index) => {
+                    if (index < i) {
+                        return event.target.dataset.value[index];
+                    }
+                    return alphabet[Math.floor(Math.random() * 26)]
+                })
+                .join("");
+            if (i >= event.target.dataset.value.length) {
+                clearInterval(interval);
+            }
+            i += 1 / 4;
+        }, 30);
+
+    }
+</script>

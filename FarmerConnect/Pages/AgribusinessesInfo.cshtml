@@ -1,0 +1,101 @@
+﻿@page
+@model FarmerConnect.Pages.AgribusinessesInfoModel
+@{
+}
+<link rel="stylesheet" href="~/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+<div class="container">
+
+    @if (Model.message.Length > 1)
+    {
+        <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <center> <p><strong>Hello!</strong> @Model.message</p></center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Show the modal using JavaScript when needed -->
+        <script>
+            $(document).ready(function () {
+                $('#messageModal').modal('show');
+            });
+        </script>
+    }
+    <style>
+        .icon {
+            color: white;
+            margin-top: 4px;
+            margin-left: 6px;
+        }
+
+        form label {
+            color: #fff;
+        }
+
+        form h2 {
+            color: #fff;
+        }
+
+        form {
+            margin-left: 27%;
+            margin-top: 80px;
+        }
+
+        .btnlg {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            margin-left: 20px;
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #fff;
+        }
+
+        .modal-header {
+            background-color: #134611;
+        }
+    </style>
+    <div class="btnlg">
+        <button type="button" onclick="location.href='@Url.Page("/Agribusiness")'" class="btn btn-outline-success">Home</button>
+    </div>
+    <form method="post">
+        <div class="row g-3">
+            <div class="co">
+                <label for="id">ID<ion-icon name="id-card-outline"></ion-icon></label>
+                <input type="text" class="form-control" placeholder="Enter User ID" aria-label="ID" name="user_id" value="@HttpContext.Session.GetInt32("UserId")" readonly>
+            </div>
+            <div class="co">
+                <label for="id">Bussiness Name<ion-icon name="business-outline"></ion-icon></label>
+                <input type="text" class="form-control" placeholder="Enter Bussiness Name" aria-label="Bussiness Name" name="bussiness">
+            </div>
+            <div class="co">
+                <label for="location">Location<ion-icon name="location-outline"></ion-icon></label>
+                <input type="text" class="form-control" placeholder="Enter Location" aria-label="Location" name="location">
+            </div>
+            <label for="id">Service Offered<ion-icon name="server-outline"></ion-icon></label>
+            <select class="form-select" aria-label="Select Service Offered" name="service">
+                <option selected>Open this select menu</option>
+                <option value="Fertilization">Fertilization</option>
+                <option value="Irrigation Services">Irrigation Services</option>
+                <option value="Agricultural Equipment Rental">Agricultural Equipment Rental</option>
+            </select>
+        </div>
+        <br />
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+    </form>
+
+</div>
